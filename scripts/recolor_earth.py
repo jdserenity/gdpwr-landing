@@ -21,13 +21,13 @@ def is_ocean(r: int, g: int, b: int) -> bool:
 
 
 def ocean_pixel(x, y, r, g, b):
-  # Dark grey oceans with visible depth from original water brightness + grain.
-  # Neutral grey only — not red-tinted ink.
-  lum = 0.299 * r + 0.587 * g + 0.114 * b
-  depth = max(0.0, min(1.0, lum / 130.0))
-  grain = ((x * 37 + y * 17) % 11) - 5  # -5..5
-  v = int(12 + 58 * depth + grain)
-  v = max(8, min(78, v))
+  # Clearly visible dark-grey oceans (neutral). Original water brightness + grain
+  # drive depth so trenches/shallows read instead of flat ink.
+  water = max(b, (0.299 * r + 0.587 * g + 0.114 * b))
+  depth = max(0.0, min(1.0, (water - 20) / 110.0))
+  grain = ((x * 37 + y * 17) % 13) - 6  # -6..6
+  v = int(28 + 90 * depth + grain)
+  v = max(22, min(125, v))
   return (v, v, v)
 
 
