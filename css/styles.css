@@ -66,24 +66,6 @@ body {
   transform-origin: 18% 88%;
 }
 
-.field__horizon {
-  position: absolute;
-  left: -10%;
-  right: -10%;
-  bottom: 18%;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(197, 208, 212, 0.08) 20%,
-    rgba(244, 247, 245, 0.22) 48%,
-    rgba(197, 208, 212, 0.08) 75%,
-    transparent 100%
-  );
-  opacity: 0;
-  animation: horizon-in 2s ease-out 0.8s forwards;
-}
-
 .field__grain {
   position: absolute;
   inset: 0;
@@ -181,12 +163,6 @@ body {
   }
 }
 
-@keyframes horizon-in {
-  to {
-    opacity: 1;
-  }
-}
-
 @keyframes beam-drift {
   0%,
   100% {
@@ -201,7 +177,6 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .field__beam,
-  .field__horizon,
   .brand__line,
   .seal {
     animation: none;
