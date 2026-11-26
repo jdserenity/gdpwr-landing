@@ -15,29 +15,24 @@ Map of this project's codebase for the maintainer: which files do what, how data
 - Product pitch or "what this app is for" — durable product/system facts go in `scaffold/CODEMAP-LLM.md`
 - Generic tutorials, glossaries, or coaching
 
-## Example shape (replace with this project's real map)
-
-### Layout
+## Layout
 
 ```
-src/
-  main.ts           # entry; wires the router
-  routes/orders.ts  # HTTP handlers for orders
-  db/client.ts      # DB connection used by routes
-lib/
-  auth.ts           # session checks called from routes
+index.html          # the page: brand + seal
+css/styles.css      # atmosphere, type, motion
+js/main.js          # marks body live after paint
+tests/test_page.py  # brand/seal present; no CTA; no banned taglines
 ```
 
-### Flow
+## Flow
 
 ```mermaid
 flowchart LR
-  Client --> routes/orders.ts
-  routes/orders.ts --> lib/auth.ts
-  routes/orders.ts --> db/client.ts
+  Browser --> index.html
+  index.html --> stylesCss[css/styles.css]
+  index.html --> mainJs[js/main.js]
 ```
 
-### State
+## State
 
-- Order rows: Postgres `orders` table (via `db/client.ts`)
-- Session: cookie → checked in `lib/auth.ts`
+- None. Static files only; no database, env secrets, or server-side state.
