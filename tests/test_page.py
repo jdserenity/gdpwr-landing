@@ -25,7 +25,11 @@ class LivingTransmissionPage(unittest.TestCase):
 
   def test_globe_is_beside_brand(self):
     self.assertRegex(self.html, r"class=\"globe\"")
-    self.assertIn("earth-map.jpg", (ROOT / "css" / "styles.css").read_text(encoding="utf-8"))
+    css = (ROOT / "css" / "styles.css").read_text(encoding="utf-8")
+    js = (ROOT / "js" / "main.js").read_text(encoding="utf-8")
+    self.assertIn("earth-map.jpg", css)
+    self.assertIn("align-items: flex-start", css)
+    self.assertIn("syncGlobeToBrand", js)
     self.assertTrue((ROOT / "assets" / "earth-map.jpg").is_file())
 
   def test_byline_and_ticker(self):

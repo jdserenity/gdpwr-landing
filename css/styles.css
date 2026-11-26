@@ -11,7 +11,10 @@
   --font-brand: "Instrument Serif", Georgia, serif;
   --font-seal: "Newsreader", Georgia, serif;
   --font-ticker: "IBM Plex Mono", ui-monospace, monospace;
-  --globe-size: clamp(5.5rem, 22vw, 13rem);
+  --brand-size: clamp(2.4rem, 11vw, 7.75rem);
+  --brand-line-height: 0.95;
+  /* Fallback before JS measures the real brand box; ticker is ignored */
+  --globe-size: calc(var(--brand-size) * var(--brand-line-height) * 2);
   --title-gap: clamp(1.85rem, 4.2vh, 2.75rem);
   --byline-gap: clamp(0.7rem, 1.6vh, 1.1rem);
 }
@@ -115,7 +118,7 @@ body {
 
 .hero {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: clamp(1rem, 4vw, 3rem);
   /* slight inset so the globe isn't flush with the right edge */
@@ -128,8 +131,8 @@ body {
   min-width: 0;
   font-family: var(--font-brand);
   font-weight: 400;
-  font-size: clamp(2.4rem, 11vw, 7.75rem);
-  line-height: 0.95;
+  font-size: var(--brand-size);
+  line-height: var(--brand-line-height);
   letter-spacing: -0.02em;
   color: var(--beam-core);
   text-wrap: balance;
