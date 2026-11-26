@@ -8,6 +8,7 @@
   --accent: #6b9e8a;
   --font-brand: "Instrument Serif", Georgia, serif;
   --font-seal: "Newsreader", Georgia, serif;
+  --globe-size: clamp(5.5rem, 22vw, 13rem);
 }
 
 *,
@@ -66,6 +67,24 @@ body {
   transform-origin: 18% 88%;
 }
 
+.field__horizon {
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  bottom: 18%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(197, 208, 212, 0.08) 20%,
+    rgba(244, 247, 245, 0.22) 48%,
+    rgba(197, 208, 212, 0.08) 75%,
+    transparent 100%
+  );
+  opacity: 0;
+  animation: horizon-in 2s ease-out 0.8s forwards;
+}
+
 .field__grain {
   position: absolute;
   inset: 0;
@@ -89,11 +108,20 @@ body {
   padding-bottom: clamp(2.5rem, 8vh, 4.5rem);
 }
 
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(1rem, 4vw, 3rem);
+}
+
 .brand {
   margin: 0;
+  flex: 1 1 auto;
+  min-width: 0;
   font-family: var(--font-brand);
   font-weight: 400;
-  font-size: clamp(2.85rem, 13vw, 7.75rem);
+  font-size: clamp(2.4rem, 11vw, 7.75rem);
   line-height: 0.95;
   letter-spacing: -0.02em;
   color: var(--beam-core);
@@ -114,6 +142,46 @@ body {
 .brand__line--infinity {
   animation-delay: 0.55s;
   color: var(--beam-core);
+}
+
+/* Spinning Earth — CSS map scroll on a sphere */
+.globe {
+  flex: 0 0 auto;
+  width: var(--globe-size);
+  height: var(--globe-size);
+  opacity: 0;
+  transform: scale(0.92);
+  animation: globe-in 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards;
+}
+
+.globe__sphere {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-image: url("../assets/earth-map.jpg");
+  background-size: 200% 100%;
+  background-repeat: repeat-x;
+  background-position: 0% 50%;
+  animation: earth-spin 48s linear infinite;
+  box-shadow:
+    inset 1.1rem 0 1.6rem rgba(0, 0, 0, 0.55),
+    inset -0.45rem 0 0.9rem rgba(180, 210, 230, 0.18),
+    inset 0 0 1.2rem rgba(0, 0, 0, 0.35),
+    0 0 2.5rem rgba(107, 158, 138, 0.12),
+    0 0.4rem 1.5rem rgba(0, 0, 0, 0.45);
+  position: relative;
+  isolation: isolate;
+}
+
+.globe__sphere::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.28) 0%, transparent 28%),
+    radial-gradient(circle at 70% 70%, transparent 40%, rgba(0, 0, 0, 0.45) 100%);
+  pointer-events: none;
 }
 
 .seal {
@@ -163,6 +231,28 @@ body {
   }
 }
 
+@keyframes horizon-in {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes globe-in {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes earth-spin {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: -200% 50%;
+  }
+}
+
 @keyframes beam-drift {
   0%,
   100% {
@@ -177,11 +267,17 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .field__beam,
+  .field__horizon,
   .brand__line,
+  .globe,
   .seal {
     animation: none;
     opacity: 1;
     transform: none;
     filter: none;
+  }
+
+  .globe__sphere {
+    animation: none;
   }
 }

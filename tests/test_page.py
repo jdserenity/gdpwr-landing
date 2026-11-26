@@ -23,6 +23,11 @@ class LivingTransmissionPage(unittest.TestCase):
     )
     self.assertRegex(self.html, r"class=\"seal\"")
 
+  def test_globe_is_beside_brand(self):
+    self.assertRegex(self.html, r"class=\"globe\"")
+    self.assertIn("earth-map.jpg", (ROOT / "css" / "styles.css").read_text(encoding="utf-8"))
+    self.assertTrue((ROOT / "assets" / "earth-map.jpg").is_file())
+
   def test_no_cta_form_or_mailto(self):
     self.assertNotRegex(self.html, r"<form\b", re.I)
     self.assertNotRegex(self.html, r"mailto:", re.I)

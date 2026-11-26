@@ -16,4 +16,5 @@ Confirmed product and system facts only. No open questions. Lessons and pitfalls
 ## Stack
 
 - Static HTML/CSS/JS. Preview: `python3 -m http.server 5173` from repo root.
+- Earth beside title: CSS sphere + `assets/earth-map.jpg` (map scrolls horizontally).
 - Tests: `python3 -m unittest tests.test_page -v`
