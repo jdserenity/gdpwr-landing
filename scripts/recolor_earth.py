@@ -21,14 +21,14 @@ def is_ocean(r: int, g: int, b: int) -> bool:
 
 
 def ocean_pixel(x, y, r, g, b):
-  # Keep oceans mostly black, but borrow original water brightness + tiny spatial
-  # noise so the field has depth instead of flat ink.
+  # Dark grey oceans with visible depth from original water brightness + grain.
+  # Neutral grey only — not red-tinted ink.
   lum = 0.299 * r + 0.587 * g + 0.114 * b
-  depth = max(0.0, min(1.0, lum / 140.0))
-  grain = ((x * 37 + y * 17) % 7) - 3  # -3..3
-  v = int(6 + 28 * depth + grain)
-  v = max(3, min(42, v))
-  return (v + 2, max(0, v // 3), max(0, v // 4))
+  depth = max(0.0, min(1.0, lum / 130.0))
+  grain = ((x * 37 + y * 17) % 11) - 5  # -5..5
+  v = int(12 + 58 * depth + grain)
+  v = max(8, min(78, v))
+  return (v, v, v)
 
 
 def recolor(src: Path, dest: Path) -> None:

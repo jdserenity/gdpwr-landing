@@ -15,7 +15,7 @@
   --brand-line-height: 0.95;
   /* Fallback before JS measures the real brand box; ticker is ignored */
   --globe-size: calc(var(--brand-size) * var(--brand-line-height) * 2);
-  --title-gap: clamp(1.85rem, 4.2vh, 2.75rem);
+  --title-gap: clamp(0.85rem, 2vh, 1.35rem);
   --byline-gap: clamp(0.7rem, 1.6vh, 1.1rem);
 }
 
