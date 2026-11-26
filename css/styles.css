@@ -131,16 +131,7 @@ body {
 
 .brand__line--infinity {
   animation-delay: 0.55s;
-  color: var(--beam);
-  background: linear-gradient(
-    105deg,
-    var(--mist) 0%,
-    var(--beam-core) 45%,
-    var(--accent) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--beam-core);
 }
 
 .seal {
