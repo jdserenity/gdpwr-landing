@@ -18,11 +18,11 @@ Map of this project's codebase for the maintainer: which files do what, how data
 ## Layout
 
 ```
-index.html              # the page: brand + globe + seal
-css/styles.css          # atmosphere, type, motion, earth spin
+index.html              # brand + globe/ticker + seal + byline
+css/styles.css          # atmosphere, type, motion, red/black earth
 assets/earth-map.jpg    # world map texture for the globe
 js/main.js              # marks body live after paint
-tests/test_page.py      # brand/seal/globe present; no CTA; no banned taglines
+tests/test_page.py      # brand/seal/byline/ticker/globe; no CTA
 ```
 
 ## Flow

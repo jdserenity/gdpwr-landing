@@ -6,9 +6,13 @@
   --beam: #dfe8e4;
   --beam-core: #f4f7f5;
   --accent: #6b9e8a;
+  --earth-red: #d4181a;
+  --ticker: #00e676;
   --font-brand: "Instrument Serif", Georgia, serif;
   --font-seal: "Newsreader", Georgia, serif;
+  --font-ticker: "IBM Plex Mono", ui-monospace, monospace;
   --globe-size: clamp(5.5rem, 22vw, 13rem);
+  --title-gap: clamp(2.75rem, 7vh, 4.5rem);
 }
 
 *,
@@ -111,13 +115,13 @@ body {
 .hero {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: clamp(1rem, 4vw, 3rem);
+  justify-content: flex-start;
+  gap: clamp(1.25rem, 3.5vw, 2.75rem);
 }
 
 .brand {
   margin: 0;
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   min-width: 0;
   font-family: var(--font-brand);
   font-weight: 400;
@@ -144,14 +148,21 @@ body {
   color: var(--beam-core);
 }
 
-/* Spinning Earth — CSS map scroll on a sphere */
-.globe {
+.globe-block {
   flex: 0 0 auto;
-  width: var(--globe-size);
-  height: var(--globe-size);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
   opacity: 0;
   transform: scale(0.92);
   animation: globe-in 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards;
+}
+
+/* Spinning Earth — CSS map scroll; black / red / white grade */
+.globe {
+  width: var(--globe-size);
+  height: var(--globe-size);
 }
 
 .globe__sphere {
@@ -163,14 +174,28 @@ body {
   background-repeat: repeat-x;
   background-position: 0% 50%;
   animation: earth-spin 48s linear infinite;
+  filter: grayscale(1) contrast(1.85) brightness(0.92);
   box-shadow:
-    inset 1.1rem 0 1.6rem rgba(0, 0, 0, 0.55),
-    inset -0.45rem 0 0.9rem rgba(180, 210, 230, 0.18),
-    inset 0 0 1.2rem rgba(0, 0, 0, 0.35),
-    0 0 2.5rem rgba(107, 158, 138, 0.12),
+    inset 1.1rem 0 1.6rem rgba(0, 0, 0, 0.7),
+    inset -0.35rem 0 0.7rem rgba(255, 255, 255, 0.12),
+    inset 0 0 1.2rem rgba(0, 0, 0, 0.4),
+    0 0 2rem rgba(212, 24, 26, 0.18),
     0 0.4rem 1.5rem rgba(0, 0, 0, 0.45);
   position: relative;
   isolation: isolate;
+  overflow: hidden;
+}
+
+.globe__sphere::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--earth-red);
+  mix-blend-mode: color;
+  opacity: 0.95;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .globe__sphere::after {
@@ -179,14 +204,30 @@ body {
   inset: 0;
   border-radius: 50%;
   background:
-    radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.28) 0%, transparent 28%),
-    radial-gradient(circle at 70% 70%, transparent 40%, rgba(0, 0, 0, 0.45) 100%);
+    radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.32) 0%, transparent 28%),
+    radial-gradient(circle at 70% 70%, transparent 38%, rgba(0, 0, 0, 0.55) 100%);
   pointer-events: none;
+  z-index: 2;
 }
 
-.seal {
+.ticker {
   margin: 0;
-  margin-top: clamp(1.75rem, 4vh, 2.75rem);
+  font-family: var(--font-ticker);
+  font-size: clamp(0.8rem, 2.2vw, 1.05rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ticker);
+  text-shadow: 0 0 12px rgba(0, 230, 118, 0.35);
+  white-space: nowrap;
+}
+
+.titles {
+  margin-top: var(--title-gap);
+}
+
+.seal,
+.byline {
+  margin: 0;
   max-width: 22rem;
   font-family: var(--font-seal);
   font-size: clamp(0.95rem, 2.4vw, 1.15rem);
@@ -197,7 +238,15 @@ body {
   color: var(--seal);
   opacity: 0;
   transform: translateY(0.5rem);
+}
+
+.seal {
   animation: seal-in 1.2s ease-out 1.15s forwards;
+}
+
+.byline {
+  margin-top: var(--title-gap);
+  animation: seal-in 1.2s ease-out 1.35s forwards;
 }
 
 @media (min-width: 720px) {
@@ -206,7 +255,8 @@ body {
     padding-right: clamp(3rem, 10vw, 8rem);
   }
 
-  .seal {
+  .seal,
+  .byline {
     max-width: 28rem;
   }
 }
@@ -269,8 +319,9 @@ body {
   .field__beam,
   .field__horizon,
   .brand__line,
-  .globe,
-  .seal {
+  .globe-block,
+  .seal,
+  .byline {
     animation: none;
     opacity: 1;
     transform: none;

@@ -28,6 +28,12 @@ class LivingTransmissionPage(unittest.TestCase):
     self.assertIn("earth-map.jpg", (ROOT / "css" / "styles.css").read_text(encoding="utf-8"))
     self.assertTrue((ROOT / "assets" / "earth-map.jpg").is_file())
 
+  def test_byline_and_ticker(self):
+    self.assertIn("By Jd Diamari", self.html)
+    self.assertIn("$GPI 5T", self.html)
+    self.assertRegex(self.html, r"class=\"byline\"")
+    self.assertRegex(self.html, r"class=\"ticker\"")
+
   def test_no_cta_form_or_mailto(self):
     self.assertNotRegex(self.html, r"<form\b", re.I)
     self.assertNotRegex(self.html, r"mailto:", re.I)
