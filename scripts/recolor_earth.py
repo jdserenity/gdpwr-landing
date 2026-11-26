@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Bake black/red/white Earth texture from assets/earth-map-natural.jpg.
 
-Oceans -> near-black with depth variance, land -> red, ice/clouds -> white.
+Oceans -> near-black with subtle grey depth, land -> red, ice/clouds -> white.
 """
 from pathlib import Path
 from PIL import Image
@@ -11,8 +11,23 @@ NATURAL = ROOT / "assets" / "earth-map-natural.jpg"
 OUT = ROOT / "assets" / "earth-map.jpg"
 
 
-def is_ocean(r: int, g: int, b: int) -> bool:
-  # Blue Marble oceans are blue-dominant; catch dark seas too (no min-blue floor).
+def luminance(r, g, b):
+  return 0.299 * r + 0.587 * g + 0.114 * b
+
+
+def is_ice_or_cloud(r, g, b):
+  # Bright + low saturation: polar ice / clouds (must win over ocean detect).
+  lum = luminance(r, g, b)
+  mx, mn = max(r, g, b), min(r, g, b)
+  sat = ((mx - mn) / mx) if mx else 0
+  if lum >= 150 and sat < 0.28:
+    return True
+  if lum >= 175 and sat < 0.38:
+    return True
+  return False
+
+
+def is_ocean(r, g, b):
   if b > r + 4 and b > g + 2:
     return True
   if b >= g and b > r and b < 90 and r < 70:
@@ -21,12 +36,12 @@ def is_ocean(r: int, g: int, b: int) -> bool:
 
 
 def ocean_pixel(x, y, r, g, b):
-  # Subtle dark-grey ocean depth (neutral). Softer than the loud pass.
-  water = max(b, (0.299 * r + 0.587 * g + 0.114 * b))
+  # Subtle neutral grey depth — quieter than the last pass.
+  water = max(b, luminance(r, g, b))
   depth = max(0.0, min(1.0, (water - 20) / 110.0))
-  grain = ((x * 37 + y * 17) % 11) - 5  # -5..5
-  v = int(14 + 48 * depth + grain)
-  v = max(10, min(64, v))
+  grain = ((x * 37 + y * 17) % 9) - 4  # -4..4
+  v = int(10 + 30 * depth + grain)
+  v = max(8, min(42, v))
   return (v, v, v)
 
 
@@ -37,8 +52,13 @@ def recolor(src: Path, dest: Path) -> None:
   for y in range(h):
     for x in range(w):
       r, g, b = px[x, y]
-      lum = 0.299 * r + 0.587 * g + 0.114 * b
-      if is_ocean(r, g, b):
+      lum = luminance(r, g, b)
+      if is_ice_or_cloud(r, g, b):
+        # Keep poles/clouds white (with a little brightness from source)
+        t = max(0.0, min(1.0, (lum - 140) / 90.0))
+        v = int(220 + 35 * t)
+        px[x, y] = (v, v, v)
+      elif is_ocean(r, g, b):
         px[x, y] = ocean_pixel(x, y, r, g, b)
       elif lum >= 205:
         px[x, y] = (245, 245, 245)

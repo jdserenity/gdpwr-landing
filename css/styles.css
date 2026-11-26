@@ -178,15 +178,14 @@ body {
   height: 100%;
   border-radius: 50%;
   background-image: url("../assets/earth-map.jpg");
-  /* Taller map + top-anchored Y keeps the north polar cap in view */
-  background-size: 200% 118%;
+  background-size: 200% 100%;
   background-repeat: repeat-x;
-  background-position: var(--earth-lon) 0%;
+  background-position: var(--earth-lon) 50%;
   animation: earth-spin 48s linear infinite;
   box-shadow:
     inset 1.1rem 0 1.6rem rgba(0, 0, 0, 0.55),
     inset -0.35rem 0 0.7rem rgba(255, 255, 255, 0.1),
-    inset 0 -0.35rem 1rem rgba(0, 0, 0, 0.35),
+    inset 0 0 1.2rem rgba(0, 0, 0, 0.35),
     0 0 2rem rgba(212, 24, 26, 0.22),
     0 0.4rem 1.5rem rgba(0, 0, 0, 0.45);
   position: relative;
@@ -200,8 +199,7 @@ body {
   border-radius: 50%;
   background:
     radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.2) 0%, transparent 26%),
-    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.14) 0%, transparent 22%),
-    radial-gradient(circle at 70% 78%, transparent 42%, rgba(0, 0, 0, 0.48) 100%);
+    radial-gradient(circle at 70% 70%, transparent 40%, rgba(0, 0, 0, 0.48) 100%);
   pointer-events: none;
 }
 
@@ -292,10 +290,10 @@ body {
 
 @keyframes earth-spin {
   from {
-    background-position: var(--earth-lon) 0%;
+    background-position: var(--earth-lon) 50%;
   }
   to {
-    background-position: calc(var(--earth-lon) - 200%) 0%;
+    background-position: calc(var(--earth-lon) - 200%) 50%;
   }
 }
 
