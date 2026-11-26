@@ -6,7 +6,7 @@
   --beam: #dfe8e4;
   --beam-core: #f4f7f5;
   --accent: #6b9e8a;
-  --font-brand: "Syne", sans-serif;
+  --font-brand: "Instrument Serif", Georgia, serif;
   --font-seal: "Newsreader", Georgia, serif;
 }
 
@@ -110,10 +110,10 @@ body {
 .brand {
   margin: 0;
   font-family: var(--font-brand);
-  font-weight: 800;
-  font-size: clamp(2.75rem, 12vw, 7.5rem);
-  line-height: 0.92;
-  letter-spacing: -0.04em;
+  font-weight: 400;
+  font-size: clamp(2.85rem, 13vw, 7.75rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
   color: var(--beam-core);
   text-wrap: balance;
 }
