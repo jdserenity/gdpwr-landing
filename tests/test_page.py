@@ -18,7 +18,7 @@ class LivingTransmissionPage(unittest.TestCase):
 
   def test_seal_name_is_present(self):
     self.assertIn(
-      "Good Power Infinity, So that Evil May Be a Solved Problem.",
+      "Good Power Infinity, So that Evil May Be a Solved Problem, Inc.",
       self.html,
     )
     self.assertRegex(self.html, r"class=\"seal\"")

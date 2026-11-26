@@ -8,7 +8,7 @@ Confirmed product and system facts only. No open questions. Lessons and pitfalls
 
 - Site: Instagram-link destination for **Good Power Infinity** — a living transmission (feel it and leave; no ask).
 - Brand on page: **Good Power Infinity** (hero).
-- Seal on page: **Good Power Infinity, So that Evil May Be a Solved Problem.**
+- Seal on page: **Good Power Infinity, So that Evil May Be a Solved Problem, Inc.**
 - Byline: **By Jd Diamari** (same gap below seal as seal has below brand).
 - Ticker under Earth: **$GPI 5T** (bright green; playful market-cap signal).
 - Earth grade: black / red / white baked into `assets/earth-map.jpg` via `scripts/recolor_earth.py` from `assets/earth-map-natural.jpg` (CSS blend tint is not used — it failed to show real red on the spinning sphere).

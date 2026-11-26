@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Bake black/red/white Earth texture from assets/earth-map-natural.jpg.
 
-Oceans -> black, land -> red, ice/clouds -> white accents.
+Oceans -> near-black with depth variance, land -> red, ice/clouds -> white.
 """
 from pathlib import Path
 from PIL import Image
@@ -15,10 +15,20 @@ def is_ocean(r: int, g: int, b: int) -> bool:
   # Blue Marble oceans are blue-dominant; catch dark seas too (no min-blue floor).
   if b > r + 4 and b > g + 2:
     return True
-  # Deep / shadowed water: still bluer than red, not bright land.
   if b >= g and b > r and b < 90 and r < 70:
     return True
   return False
+
+
+def ocean_pixel(x, y, r, g, b):
+  # Keep oceans mostly black, but borrow original water brightness + tiny spatial
+  # noise so the field has depth instead of flat ink.
+  lum = 0.299 * r + 0.587 * g + 0.114 * b
+  depth = max(0.0, min(1.0, lum / 140.0))
+  grain = ((x * 37 + y * 17) % 7) - 3  # -3..3
+  v = int(6 + 28 * depth + grain)
+  v = max(3, min(42, v))
+  return (v + 2, max(0, v // 3), max(0, v // 4))
 
 
 def recolor(src: Path, dest: Path) -> None:
@@ -30,7 +40,7 @@ def recolor(src: Path, dest: Path) -> None:
       r, g, b = px[x, y]
       lum = 0.299 * r + 0.587 * g + 0.114 * b
       if is_ocean(r, g, b):
-        px[x, y] = (0, 0, 0)
+        px[x, y] = ocean_pixel(x, y, r, g, b)
       elif lum >= 205:
         px[x, y] = (245, 245, 245)
       elif lum >= 170:
