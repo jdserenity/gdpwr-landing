@@ -20,9 +20,11 @@ Map of this project's codebase for the maintainer: which files do what, how data
 ```
 index.html              # brand + globe/ticker + seal + byline
 css/styles.css          # atmosphere, type, motion, red/black earth
-assets/earth-map.jpg    # world map texture for the globe
-js/main.js              # marks body live after paint
-tests/test_page.py      # brand/seal/byline/ticker/globe; no CTA
+assets/earth-map-natural.jpg  # original blue-marble source
+assets/earth-map.jpg          # black/red/white bake used by the globe
+scripts/recolor_earth.py      # regenerates earth-map.jpg from natural
+js/main.js                    # marks body live after paint
+tests/test_page.py            # brand/seal/byline/ticker/globe; no CTA
 ```
 
 ## Flow

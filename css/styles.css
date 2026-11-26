@@ -6,13 +6,14 @@
   --beam: #dfe8e4;
   --beam-core: #f4f7f5;
   --accent: #6b9e8a;
-  --earth-red: #d4181a;
   --ticker: #00e676;
+  --ticker-dim: #00a855;
   --font-brand: "Instrument Serif", Georgia, serif;
   --font-seal: "Newsreader", Georgia, serif;
   --font-ticker: "IBM Plex Mono", ui-monospace, monospace;
   --globe-size: clamp(5.5rem, 22vw, 13rem);
-  --title-gap: clamp(2.75rem, 7vh, 4.5rem);
+  --title-gap: clamp(1.85rem, 4.2vh, 2.75rem);
+  --byline-gap: clamp(0.7rem, 1.6vh, 1.1rem);
 }
 
 *,
@@ -115,13 +116,15 @@ body {
 .hero {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: clamp(1.25rem, 3.5vw, 2.75rem);
+  justify-content: space-between;
+  gap: clamp(1rem, 4vw, 3rem);
+  /* slight inset so the globe isn't flush with the right edge */
+  padding-right: clamp(0.75rem, 3vw, 2.25rem);
 }
 
 .brand {
   margin: 0;
-  flex: 0 1 auto;
+  flex: 1 1 auto;
   min-width: 0;
   font-family: var(--font-brand);
   font-weight: 400;
@@ -174,28 +177,14 @@ body {
   background-repeat: repeat-x;
   background-position: 0% 50%;
   animation: earth-spin 48s linear infinite;
-  filter: grayscale(1) contrast(1.85) brightness(0.92);
   box-shadow:
-    inset 1.1rem 0 1.6rem rgba(0, 0, 0, 0.7),
-    inset -0.35rem 0 0.7rem rgba(255, 255, 255, 0.12),
+    inset 1.1rem 0 1.6rem rgba(0, 0, 0, 0.65),
+    inset -0.35rem 0 0.7rem rgba(255, 255, 255, 0.1),
     inset 0 0 1.2rem rgba(0, 0, 0, 0.4),
-    0 0 2rem rgba(212, 24, 26, 0.18),
+    0 0 2rem rgba(212, 24, 26, 0.22),
     0 0.4rem 1.5rem rgba(0, 0, 0, 0.45);
   position: relative;
-  isolation: isolate;
   overflow: hidden;
-}
-
-.globe__sphere::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: var(--earth-red);
-  mix-blend-mode: color;
-  opacity: 0.95;
-  pointer-events: none;
-  z-index: 1;
 }
 
 .globe__sphere::after {
@@ -204,10 +193,9 @@ body {
   inset: 0;
   border-radius: 50%;
   background:
-    radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.32) 0%, transparent 28%),
-    radial-gradient(circle at 70% 70%, transparent 38%, rgba(0, 0, 0, 0.55) 100%);
+    radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.22) 0%, transparent 26%),
+    radial-gradient(circle at 70% 70%, transparent 40%, rgba(0, 0, 0, 0.5) 100%);
   pointer-events: none;
-  z-index: 2;
 }
 
 .ticker {
@@ -219,6 +207,7 @@ body {
   color: var(--ticker);
   text-shadow: 0 0 12px rgba(0, 230, 118, 0.35);
   white-space: nowrap;
+  animation: ticker-pulse 2.4s ease-in-out infinite;
 }
 
 .titles {
@@ -245,7 +234,7 @@ body {
 }
 
 .byline {
-  margin-top: var(--title-gap);
+  margin-top: var(--byline-gap);
   animation: seal-in 1.2s ease-out 1.35s forwards;
 }
 
@@ -303,6 +292,20 @@ body {
   }
 }
 
+@keyframes ticker-pulse {
+  0%,
+  100% {
+    color: var(--ticker);
+    text-shadow: 0 0 12px rgba(0, 230, 118, 0.4);
+    opacity: 1;
+  }
+  50% {
+    color: var(--ticker-dim);
+    text-shadow: 0 0 4px rgba(0, 230, 118, 0.15);
+    opacity: 0.72;
+  }
+}
+
 @keyframes beam-drift {
   0%,
   100% {
@@ -328,7 +331,8 @@ body {
     filter: none;
   }
 
-  .globe__sphere {
+  .globe__sphere,
+  .ticker {
     animation: none;
   }
 }
