@@ -40,8 +40,8 @@ def ocean_pixel(x, y, r, g, b):
   water = max(b, luminance(r, g, b))
   depth = max(0.0, min(1.0, (water - 20) / 110.0))
   grain = ((x * 37 + y * 17) % 9) - 4  # -4..4
-  v = int(10 + 30 * depth + grain)
-  v = max(8, min(42, v))
+  v = int(8 + 22 * depth + grain)
+  v = max(6, min(32, v))
   return (v, v, v)
 
 
